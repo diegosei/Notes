@@ -14,7 +14,7 @@ struct NCreateNoteView: View {
     @State var isFavorite: Bool = false
     
     func onTap() {
-        let card = NCard(title: title, text: editor, type: size)
+        let card = NCard(title: title, text: editor, type: size, toggle: isFavorite)
         print("Nota: \(card)")
     }
     
@@ -24,13 +24,17 @@ struct NCreateNoteView: View {
                 Text("Crear Nueva Nota")
                     .font(.largeTitle)
                     .bold()
+                    .padding(.bottom, 10)
                 TextField("Titulo:", text: $title)
+                    .font(.headline)
                     .padding()
                     .background(Color.gray.opacity(0.2))
                     .cornerRadius(16)
                 TextEditor(text: $editor)
-                    .frame(height: 150)
                     .scrollContentBackground(.hidden)
+                    .font(.body)
+                    .frame(height: 150)
+                    .padding()
                     .background(Color.gray.opacity(0.2))
                     .cornerRadius(16)
                 HStack {
@@ -42,6 +46,7 @@ struct NCreateNoteView: View {
                         Text("Mediano").tag(NCardType.medium)
                     }
                 }
+                .padding()
                 Toggle("Marcar como Favorito", isOn: $isFavorite)
                     .padding()
                     .font(.headline)
@@ -63,6 +68,7 @@ struct NCreateNoteView: View {
                         .cornerRadius(16)
                         .foregroundStyle(Color.white)
                 }
+                .padding(.top, 20)
             }
             .padding()
             .background(Color.white)
