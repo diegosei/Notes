@@ -14,6 +14,9 @@ struct NListView: View {
         NCard(title: "card 3", text: "texto del card 3", type: .medium, toggle: false),
         NCard(title: "card 4", text: "texto del card 4", type: .small, toggle: false)
     ]
+    
+    @State var showSheet: Bool = false
+    
     var body: some View {
         List {
             ForEach (cards) { card in
@@ -21,6 +24,18 @@ struct NListView: View {
             }
         }
         .listStyle(.plain)
+        .sheet(isPresented: $showSheet) {
+            NCreateNoteView()
+        }
+        .overlay {
+            VStack {
+                Spacer()
+                Button("Create Note ") {
+                    showSheet = true
+                }
+            }
+            
+        }
     }
 }
 
