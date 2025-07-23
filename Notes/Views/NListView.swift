@@ -8,24 +8,22 @@
 import SwiftUI
 
 struct NListView: View {
-    let cards: [NCard] = [
-        NCard(title: "card 1", text: "texto del card 1", type: .small, toggle: false),
-        NCard(title: "card 2", text: "texto del card 2", type: .small, toggle: false),
-        NCard(title: "card 3", text: "texto del card 3", type: .medium, toggle: false),
-        NCard(title: "card 4", text: "texto del card 4", type: .small, toggle: false)
-    ]
+    @EnvironmentObject var appInfo: AppInfo
     
     @State var showSheet: Bool = false
     
     var body: some View {
         List {
-            ForEach (cards) { card in
+            ForEach (appInfo.cards) { card in
                 NCardView(card: card)
             }
         }
         .listStyle(.plain)
         .sheet(isPresented: $showSheet) {
-            NCreateNoteView()
+            NCreateNoteView() { card in
+                appInfo.createNote(card: card)
+                showSheet = false
+            }
         }
         .overlay {
             VStack {
@@ -41,4 +39,5 @@ struct NListView: View {
 
 #Preview {
     NListView()
+        .environmentObject(AppInfo())
 }

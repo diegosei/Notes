@@ -8,14 +8,14 @@
 import SwiftUI
 
 struct NCreateNoteView: View {
-    @State var title: String = ""
-    @State var editor: String = ""
-    @State var size: NCardType = .small
-    @State var isFavorite: Bool = false
+    @StateObject var viewModel: NCreateNoteViewModel = NCreateNoteViewModel()
+    
+    var onNoteCreated: (NCard) -> Void = { _ in }
     
     func onTap() {
-        let card = NCard(title: title, text: editor, type: size, toggle: isFavorite)
+        let card = viewModel.createNote()
         print("Nota: \(card)")
+        onNoteCreated(card)
     }
     
     var body: some View {
@@ -25,36 +25,26 @@ struct NCreateNoteView: View {
                     .font(.largeTitle)
                     .bold()
                     .padding(.bottom, 10)
-                TextField("Titulo:", text: $title)
-                    .font(.headline)
-                    .padding()
-                    .background(Color.gray.opacity(0.2))
-                    .cornerRadius(16)
-                TextEditor(text: $editor)
-                    .scrollContentBackground(.hidden)
-                    .font(.body)
-                    .frame(height: 150)
-                    .padding()
-                    .background(Color.gray.opacity(0.2))
-                    .cornerRadius(16)
+                NTextField(placeHolder: "Titulo:", text: $viewModel.title)
+                NTextEditor(placeHolder: "", text: $viewModel.editor)
                 HStack {
                     Text("Tamaño")
                         .padding()
                     Spacer()
-                    Picker("Tamaños", selection: $size) {
+                    Picker("Tamaños", selection: $viewModel.size) {
                         Text("Pequeño").tag(NCardType.small)
                         Text("Mediano").tag(NCardType.medium)
                     }
                 }
                 .padding()
-                Toggle("Marcar como Favorito", isOn: $isFavorite)
+                Toggle("Marcar como Favorito", isOn: $viewModel.isFavorite)
                     .padding()
                     .font(.headline)
-                    .onChange(of: isFavorite){ newValue in
+                    .onChange(of: viewModel.isFavorite){ newValue in
                         if newValue == true {
-                            isFavorite = true
+                            viewModel.isFavorite = true
                         } else {
-                            isFavorite = false
+                            viewModel.isFavorite = false
                         }
                     }
                 Button {
