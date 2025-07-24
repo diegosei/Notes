@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct NTextEditor: View {
-    var placeHolder: String = ""
+    var contentNote: String = ""
     @Binding var text: String
     
     var body: some View {
@@ -24,6 +24,6 @@ struct NTextEditor: View {
 
 #Preview {
     VStack {
-        NTextEditor(placeHolder: "Que estas pensando hoy?", text: .constant("el pepe"))
+        NTextEditor(contentNote: "Que estas pensando hoy?", text: .constant("el pepe"))
     }
 }

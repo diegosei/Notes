@@ -13,7 +13,17 @@ struct ContentView: View {
     
     var body: some View {
         VStack {
-            NListView()
+            TabView {
+                NListView()
+                    .tabItem {
+                        Label("Home", systemImage: "house.fill")
+                    }
+                NListView(forFavorite: true)
+                .tabItem {
+                    Label("Favorite", systemImage: "heart")
+                    
+                }
+            }
                 .environmentObject(appInfo)
         }
         

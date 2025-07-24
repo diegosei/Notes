@@ -30,7 +30,15 @@ class AppInfo: ObservableObject {
             NCard(title: "Revisar contrato", text: "Cláusulas de confidencialidad", type: .medium, toggle: true),
             NCard(title: "Hacer backup", text: "Fotos del teléfono", type: .medium, toggle: false)
         ]
+    var favoriteCards: [NCard] {
+        cards.filter{$0.toggle}
+    }
     func createNote(card: NCard) {
         cards.append(card)
+    }
+    func toggleFavorite(card: NCard) {
+        if let index = cards.firstIndex(where: { $0.id == card.id }) {
+            cards[index].toggle.toggle()
+        }
     }
 }

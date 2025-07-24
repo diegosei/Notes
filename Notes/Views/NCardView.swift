@@ -9,7 +9,19 @@ import SwiftUI
 
 struct NCardView: View {
     
-    let card: NCard
+    var card: NCard
+    var onToggleFavorite: (() -> Void)?
+    
+    func FavoriteButton() -> some View {
+        Image(systemName: card.toggle ? "heart.fill" : "heart")
+            .font(.system(size: 20))
+            .padding(10)
+            .foregroundStyle(.red)
+            .bold()
+            .onTapGesture {
+                onToggleFavorite?()
+            }
+    }
     
     @ViewBuilder
     func CardSmallView() -> some View {
@@ -23,11 +35,7 @@ struct NCardView: View {
                 .font(.headline)
                 .lineLimit(2)
                 .frame(maxWidth: .infinity, maxHeight: .infinity)
-            Image(systemName: "heart")
-                .font(.system(size: 20))
-                .padding(10)
-                .foregroundStyle(.red)
-                .bold()
+            FavoriteButton()
         }
         .padding()
         .background(Color.gray.opacity(0.2))
@@ -41,11 +49,7 @@ struct NCardView: View {
             VStack{
                 HStack{
                     Spacer()
-                    Image(systemName: "heart")
-                        .font(.system(size: 20))
-                        .padding(10)
-                        .foregroundStyle(.red)
-                        .bold()
+                    FavoriteButton()
                 }
                 Text(card.title)
                     .font(.headline)

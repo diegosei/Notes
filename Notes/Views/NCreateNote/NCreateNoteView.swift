@@ -26,7 +26,7 @@ struct NCreateNoteView: View {
                     .bold()
                     .padding(.bottom, 10)
                 NTextField(placeHolder: "Titulo:", text: $viewModel.title)
-                NTextEditor(placeHolder: "", text: $viewModel.editor)
+                NTextEditor(contentNote: "", text: $viewModel.editor)
                 HStack {
                     Text("Tamaño")
                         .padding()
@@ -60,12 +60,12 @@ struct NCreateNoteView: View {
                 }
                 .padding(.top, 20)
             }
-            .padding()
-            .background(Color.white)
-            .cornerRadius(16)
-            .padding()
-            .background(Color.cyan.opacity(0.2))
         }
+        .padding()
+        .background(Color.white)
+        .cornerRadius(16)
+        .padding()
+        .background(Color.cyan.opacity(0.2))
     }
 }
 
