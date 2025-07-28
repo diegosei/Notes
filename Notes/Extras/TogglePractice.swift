@@ -26,13 +26,6 @@ struct TogglePractice: View {
                 age = 17
             }
         }
-        /*.onChange(of: age) { newValue in
-            if newValue >= 18 {
-                isAdult = true
-            } else {
-                isAdult = false
-            }
-        }*/
     }
 }
 
